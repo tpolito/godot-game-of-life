@@ -1,0 +1,129 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://cell.png" type="Texture" id=1]
+[ext_resource path="res://World.gd" type="Script" id=2]
+
+[sub_resource type="TileSet" id=1]
+0/name = "cell.png 0"
+0/texture = ExtResource( 1 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 8, 8 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[node name="World" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+cell_size = Vector2( 8, 8 )
+format = 1
+
+[node name="UI" type="Control" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Controls" type="Panel" parent="UI"]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -74.0
+margin_right = 193.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Pause" type="CheckButton" parent="UI/Controls"]
+margin_right = 146.0
+margin_bottom = 40.0
+text = "Pause Sim"
+
+[node name="Restart" type="Button" parent="UI/Controls"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = -25.0
+margin_right = 59.0
+margin_bottom = -5.0
+text = "Restart"
+
+[node name="Stats" type="Panel" parent="UI"]
+margin_right = 190.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="LivingCells" type="Label" parent="UI/Stats"]
+margin_right = 120.0
+margin_bottom = 14.0
+text = "Living Cells: 10000"
+
+[node name="Generation" type="Label" parent="UI/Stats"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -14.0
+margin_right = 175.0
+text = "Generations Passed: 10000"
+
+[node name="Start" type="Panel" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -84.5
+margin_top = -34.0
+margin_right = 84.5
+margin_bottom = 34.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="UI/Start"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -70.0
+margin_top = 5.0
+margin_right = 70.0
+margin_bottom = 19.0
+text = "Conways Game of Life"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="Button" parent="UI/Start"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.5
+margin_top = -25.0
+margin_right = 20.5
+margin_bottom = -5.0
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SimTimer" type="Timer" parent="."]
+wait_time = 0.15
+
+[connection signal="toggled" from="UI/Controls/Pause" to="." method="_on_Pause_toggled"]
+[connection signal="pressed" from="UI/Controls/Restart" to="." method="_on_Restart_pressed"]
+[connection signal="pressed" from="UI/Start/Start" to="." method="_on_Start_pressed"]
+[connection signal="timeout" from="SimTimer" to="." method="_on_SimTimer_timeout"]
